@@ -3,6 +3,15 @@ import {mobileQuery} from 'ghost/utils/mobile';
 var SettingsIndexRoute = Ember.Route.extend(SimpleAuth.AuthenticatedRouteMixin, {
     // redirect to general tab, unless on a mobile phone
     beforeModel: function () {
+        var self = this;
+        this.store.find('user', 'me').then(function (user) {
+            if (user.get('isAuthor')) {
+                self.transitionTo('settings.users.user', user);
+            } else if (user.get('isEditor')) {
+                self.transitionTo('settings.users');
+            }
+        });
+
         if (!mobileQuery.matches) {
             this.transitionTo('settings.general');
         } else {
@@ -19,6 +28,7 @@ var SettingsIndexRoute = Ember.Route.extend(SimpleAuth.AuthenticatedRouteMixin, 
             mobileQuery.addListener(this.fillOutlet);
         }
     },
+    
     deactivate: function () {
         if (this.get('fillOutlet')) {
             mobileQuery.removeListener(this.fillOutlet);
