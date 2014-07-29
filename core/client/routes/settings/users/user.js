@@ -17,8 +17,7 @@ var SettingsUserRoute = Ember.Route.extend({
                 isEditor = currentUser.get('isEditor');
             if (isAuthor && !isOwnProfile) {
                 self.transitionTo('settings.users.user', currentUser);
-            } else if (isEditor && !user.get('isAuthor') &&
-                       !isOwnProfile) {
+            } else if (isEditor && !isOwnProfile && !user.get('isAuthor')) {
                 self.transitionTo('settings.users');
             }
         });

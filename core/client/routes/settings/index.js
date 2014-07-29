@@ -7,8 +7,10 @@ var SettingsIndexRoute = Ember.Route.extend(SimpleAuth.AuthenticatedRouteMixin, 
         this.store.find('user', 'me').then(function (user) {
             if (user.get('isAuthor')) {
                 self.transitionTo('settings.users.user', user);
+                return;
             } else if (user.get('isEditor')) {
                 self.transitionTo('settings.users');
+                return;
             }
         });
 
