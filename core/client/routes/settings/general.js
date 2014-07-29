@@ -1,15 +1,10 @@
 import loadingIndicator from 'ghost/mixins/loading-indicator';
+import currentUserMixin from 'ghost/mixins/route-current-user';
 
-var SettingsGeneralRoute = Ember.Route.extend(SimpleAuth.AuthenticatedRouteMixin, loadingIndicator, {
+var SettingsGeneralRoute = Ember.Route.extend(
+    SimpleAuth.AuthenticatedRouteMixin, loadingIndicator, currentUserMixin, {
     beforeModel: function () {
-        var self = this;
-        this.store.find('user', 'me').then(function (user) {
-            if (user.get('isAuthor')) {
-                self.transitionTo('settings.users.user', user);
-            } else if (user.get('isEditor')) {
-                self.transitionTo('settings.users');
-            }
-        });
+        this._super();
     },
 
     model: function () {

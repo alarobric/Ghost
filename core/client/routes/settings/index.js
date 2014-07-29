@@ -1,18 +1,10 @@
 import {mobileQuery} from 'ghost/utils/mobile';
+import currentUserMixin from 'ghost/mixins/route-current-user';
 
-var SettingsIndexRoute = Ember.Route.extend(SimpleAuth.AuthenticatedRouteMixin, {
+var SettingsIndexRoute = Ember.Route.extend(SimpleAuth.AuthenticatedRouteMixin, currentUserMixin, {
     // redirect to general tab, unless on a mobile phone
     beforeModel: function () {
-        var self = this;
-        this.store.find('user', 'me').then(function (user) {
-            if (user.get('isAuthor')) {
-                self.transitionTo('settings.users.user', user);
-                return;
-            } else if (user.get('isEditor')) {
-                self.transitionTo('settings.users');
-                return;
-            }
-        });
+        this._super();
 
         if (!mobileQuery.matches) {
             this.transitionTo('settings.general');
