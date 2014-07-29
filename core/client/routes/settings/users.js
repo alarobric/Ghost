@@ -1,11 +1,9 @@
-var UsersRoute = Ember.Route.extend(SimpleAuth.AuthenticatedRouteMixin, {
+import CurrentUserSettings from 'ghost/mixins/current-user-settings';
+
+var UsersRoute = Ember.Route.extend(SimpleAuth.AuthenticatedRouteMixin, CurrentUserSettings, {
     beforeModel: function () {
-        var self = this;
-        this.store.find('user', 'me').then(function (user) {
-            if (user.get('isAuthor')) {
-                self.transitionTo('settings.users.user', user);
-            }
-        });
+        return this.currentUser()
+        	.then(this.transitionAuthor);
     }
 });
 
