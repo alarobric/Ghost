@@ -4,8 +4,8 @@ import CurrentUserSettings from 'ghost/mixins/current-user-settings';
 var SettingsGeneralRoute = Ember.Route.extend(SimpleAuth.AuthenticatedRouteMixin, loadingIndicator, CurrentUserSettings, {
     beforeModel: function () {
         return this.currentUser()
-        	.then(this.transitionAuthor.bind(this))
-        	.then(this.transitionEditor.bind(this));
+            .then(this.transitionAuthor())
+            .then(this.transitionEditor());
     },
 
     model: function () {

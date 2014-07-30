@@ -1,22 +1,30 @@
 var CurrentUserSettings = Ember.Mixin.create({
-	currentUser: function() {
+	currentUser: function () {
 		return this.store.find('user', 'me');
 	},
 
-	transitionAuthor: function(user) {
-		if (user.get('isAuthor')) {
-			return this.transitionTo('settings.users.user', user);
-		}
+	transitionAuthor: function () {
+		var self = this;
 
-		return user;
+		return function (user) {
+			if (user.get('isAuthor')) {
+				return self.transitionTo('settings.users.user', user);
+			}
+
+			return user;
+		};
 	},
 
-	transitionEditor: function(user) {
-		if (user.get('isEditor')) {
-			return this.transitionTo('settings.users');
-		}
+	transitionEditor: function () {
+		var self = this;
 
-		return user;
+		return function (user) {
+			if (user.get('isEditor')) {
+				return self.transitionTo('settings.users');
+			}
+
+			return user;
+		};
 	}
 });
 

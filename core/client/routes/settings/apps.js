@@ -7,8 +7,8 @@ var AppsRoute = Ember.Route.extend(SimpleAuth.AuthenticatedRouteMixin, CurrentUs
         }
 
         return this.currentUser()
-            .then(this.transitionAuthor.bind(this))
-            .then(this.transitionEditor.bind(this));
+            .then(this.transitionAuthor())
+            .then(this.transitionEditor());
     },
     
     model: function () {

@@ -6,9 +6,9 @@ var SettingsIndexRoute = Ember.Route.extend(SimpleAuth.AuthenticatedRouteMixin, 
     beforeModel: function () {
         var self = this;
         this.currentUser()
-            .then(this.transitionAuthor.bind(this))
-            .then(this.transitionEditor.bind(this))
-            .then(function() {
+            .then(this.transitionAuthor())
+            .then(this.transitionEditor())
+            .then(function () {
                 if (!mobileQuery.matches) {
                     self.transitionTo('settings.general');
                 } else {
@@ -24,7 +24,7 @@ var SettingsIndexRoute = Ember.Route.extend(SimpleAuth.AuthenticatedRouteMixin, 
                     }, self));
                     mobileQuery.addListener(self.fillOutlet);
                 }
-            });        
+            });
     },
     
     deactivate: function () {
